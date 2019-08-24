@@ -1,0 +1,54 @@
+{% extends 'base.html.twig'%}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <div class="ban col-md-12"><h1>{{ article.title }}</h1>
+        <div class="metadata">Ecrit le {{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i') }} dans la catégorie {% if  article.category %}{{ article.category.name }}{% endif %}</div>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <article class="post-single col-md-12">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="img-post col-md-4">
+                            <img class="img-fluid" src="../uploads/images/{{ article.image }}" alt="">
+                        </div>
+
+                        <div class="col-md-8">
+                            {{ article.content | raw }}
+                            <section id="commentaire">
+                                <h3>{{ article.comment | length}} Commentaire(s) : </h3>
+                                {% for comment in article.comment %}
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                {{ comment.author }}<br>(<small>{{ comment.createdAt | date('d/m/y à H:i') }}</small>)
+                                            </div>
+                                            <div class="col">
+                                                {{ comment.content | raw }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </section>
+                            {% if app.user %}
+                                {{ form_start(form) }}
+                                {{ form_row(form.author,{'value' : app.user.pseudo }) }}
+                                {{ form_row(form.content,{'attr' : {'placeholder' : 'Votre commentaire' }})}}
+                                <button type="submit" class="btn btn-success">
+                                    Commenter
+                                </button>
+                                {{ form_end(form) }}
+                            {% else %}
+                                <a href="{{ path('app_login') }}">Connectez-vous pour laisser un commentaire</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+
+        </div>
+    </div>
+{% endblock %}

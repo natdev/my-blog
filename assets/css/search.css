@@ -1,0 +1,19 @@
+div#result {
+    position: absolute;
+    width: 50%;
+    max-height: 300px;
+    color: #fff;
+    margin-top: 48px;
+}
+
+input.search-menu {
+    width: 50%;
+    background: transparent;
+    border-bottom: 5px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    font-size: 24px;
+    color: #fff;
+    outline: none;
+}

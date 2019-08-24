@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil Blog{% endblock %}
+{% block header %}<div class="jumbotron header-bg">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <h2 class="h1 title-header">SHARE YOUR TRAVEL<br> WITH <br> THE WORLD</h2>
+        </div>
+    </div>
+</div>{% endblock %}
+{% block body %}
+    {% set val = 0 %}
+    {% for article in articles %}
+        {% if val is divisible by(2) %}
+        <div class="illus col-md-6">
+
+            <div class="wrap-title" style="background: linear-gradient(rgba(9, 88, 27, 0.5),rgba(9, 88, 27, 0.5)), url(../uploads/images/{{ article.image }}); background-size: cover;">
+                <div class="title-illus">
+                    <h2><a href="{{ path('blog_show', {id: article.id}) }}">{{ article.title }}</a></h2>
+                    <div class="meta">
+                        <span  class="btn comment-count"> <i class="fas fa-comment"></i> {{ article.comment | length}} Commentaire(s)</span> |
+                        <a href="{{ path('post_like', {id: article.id}) }}" class="btn btn-link js-like">
+                            {% if app.user and article.isLikedByUser(app.user) %}
+                                <i class="fas fa-thumbs-up"></i>
+                            {% else %}
+                                <i class="far fa-thumbs-up"></i>
+                            {% endif %}
+                            <span class="js-likes">{{ article.likes | length }}</span>
+                            <span class="js-label">j'aime</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="article-home col-md-6">
+
+            <div class="content">
+                <img class="img-fluid" src="../uploads/images/{{ article.imageIco }}" alt="">
+
+                    <p>{{ article.content | striptags | truncate(400) }}</p>
+
+            </div>
+        </div>
+        {% else %}
+            <div class="article-home col-md-6">
+
+                <div class="content">
+                    <img class="img-fluid" src="../uploads/images/{{ article.imageIco }}" alt="">
+
+                    <p>{{ article.content | striptags | truncate(400) }}</p>
+
+                </div>
+            </div>
+            <div class="illus col-md-6">
+
+                <div class="wrap-title" style="background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(../uploads/images/{{ article.image }}); background-size: cover;">
+                    <div class="title-illus">
+                        <h2><a href="{{ path('blog_show', {id: article.id}) }}">{{ article.title }}</a></h2>
+                        <div class="meta">
+                            <span  class="btn comment-count"> <i class="fas fa-comment"></i> {{ article.comment | length}} Commentaire(s)</span> |
+                            <a href="{{ path('post_like', {id: article.id}) }}" class="btn btn-link js-like">
+                                {% if app.user and article.isLikedByUser(app.user) %}
+                                    <i class="fas fa-thumbs-up"></i>
+                                {% else %}
+                                    <i class="far fa-thumbs-up"></i>
+                                {% endif %}
+                                <span class="js-likes">{{ article.likes | length }}</span>
+                                <span class="js-label">j'aime</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        {% endif %}
+        {% set val = val+1 %}
+    {% endfor %}
+{% endblock %}

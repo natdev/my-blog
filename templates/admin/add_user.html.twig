@@ -1,0 +1,23 @@
+{% extends 'baseAdmin.html.twig' %}
+{% form_theme formUser 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <h1>{% if(editMode) %}
+            Editer
+        {% else %}
+            Ajouter
+        {% endif %}
+        un utilisateur</h1>
+    {{ form_start(formUser) }}
+    {{ form_row(formUser.pseudo) }}
+    {{ form_row(formUser.email) }}
+    {{ form_row(formUser.password) }}
+    {{ form_row(formUser.roles) }}
+    <button type="submit" class="btn btn-success">
+        {% if(editMode) %}
+            Editer
+        {% else %}
+            Ajouter un utilisateur
+        {% endif %}
+    </button>
+    {{ form_end(formUser) }}
+{% endblock %}

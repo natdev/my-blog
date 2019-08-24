@@ -1,0 +1,20 @@
+{% extends 'baseAdmin.html.twig'%}
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<h1>Nouvel Article</h1>
+    {{ form_start(formArticle) }}
+        {{ form_row(formArticle.title) }}
+        {{ form_row(formArticle.category) }}
+        {{ form_row(formArticle.image) }}
+        {{ form_row(formArticle.imageIco) }}
+        {{ form_row(formArticle.content) }}
+    <button type="submit" class="btn btn-success">
+        {% if(editMode) %}
+            Editer
+        {% else %}
+            Ajouter un article
+        {% endif %}
+
+    </button>
+    {{ form_end(formArticle) }}
+{% endblock %}

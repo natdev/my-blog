@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        <script src="https://kit.fontawesome.com/9165386351.js"></script>
+    </head>
+    <body>
+    <nav id="user-menu" class="fixed-top bg-dark">
+
+            <ul class="navbar-nav ml-auto">
+                {% if not app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('security_logout') }}">Se déconnecter</a>
+                    </li>
+                {% endif %}
+                {% if not app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a>
+                    </li>
+                {% else %}
+                    {% if is_granted(expression(
+                        '"ROLE_ADMIN" in roles '
+                        )) %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin') }}">Admin</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Profil</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+    </nav>
+    <nav id="main-menu" class="navbar navbar-expand-lg navbar-light fixed-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('blog') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('contact') }}">Contact <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                   <a class="nav-link srch-btn" href="#"><i class="fas fa-search fa-lg"></i></a>
+                </li>
+            </ul>
+            <div class="overlay">
+                <button type="button" class="close real-close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                    <input class="search-menu" type="text" placeholder="Search" aria-label="Search" value="{{ app.request.get('keywords') }}">
+
+                <div id="result"></div>
+            </div>
+        </div>
+    </nav>
+    {% block header %}{% endblock %}
+    <div class="container-fluid list-article">
+        <div class="row">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+        {% block javascripts %}
+            <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+            <script>tinymce.init({selector:'textarea'});</script>
+        {{ encore_entry_script_tags('app') }}
+
+        {% endblock %}
+    </body>
+</html>

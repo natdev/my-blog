@@ -1,0 +1,30 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Gestion des utilisateurs</h1>
+    <a href="{{ path('add_users') }}">Ajoutez un  utilisateur</a>
+    <table class="display table_admin">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>pseudo</th>
+            <th>email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.pseudo }}</td>
+                <td>{{ user.roles[0] }}</td>
+                <td>
+                     <a class="btn btn-success" href="{{ path('edit_users',{id: user.id}) }}">Editer</a>
+                     <a class="btn btn-danger" href="{{ path('del_user',{id: user.id}) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
